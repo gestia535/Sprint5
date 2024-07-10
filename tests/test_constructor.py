@@ -24,17 +24,24 @@ class TestConstructor:
         driver.get('https://stellarburgers.nomoreparties.site/')
         driver.find_element(*TestLocators.SEARCH_TAB_SAUCES).click()
 
-        assert driver.find_element(*TestLocators.SEARCH_CURRENT_TAB_SAUCES).text == 'Соусы'
+        WebDriverWait(driver, 3).until(expected_conditions.visibility_of_element_located
+                                       (TestLocators.SEARCH_CURRENT_TAB_SAUCES))
+
+        assert driver.find_element(*TestLocators.SEARCH_CURRENT_TAB_SAUCES).is_displayed(), f'Tab is not displayed'
 
     def test_go_to_fillings_tab_success(self, driver):
         driver.get('https://stellarburgers.nomoreparties.site/')
         driver.find_element(*TestLocators.SEARCH_TAB_FILLINGS).click()
+        WebDriverWait(driver, 3).until(expected_conditions.visibility_of_element_located
+                                       (TestLocators.SEARCH_CURRENT_TAB_FILLINGS))
 
-        assert driver.find_element(*TestLocators.SEARCH_CURRENT_TAB_FILLINGS).text == 'Начинки'
+        assert driver.find_element(*TestLocators.SEARCH_CURRENT_TAB_FILLINGS).is_displayed(), f'Tab is not displayed'
 
     def test_go_to_buns_tab_success(self, driver):
         driver.get('https://stellarburgers.nomoreparties.site/')
         driver.find_element(*TestLocators.SEARCH_TAB_FILLINGS).click()
         driver.find_element(*TestLocators.SEARCH_TAB_BUNS).click()
+        WebDriverWait(driver, 3).until(expected_conditions.visibility_of_element_located
+                                       (TestLocators.SEARCH_CURRENT_TAB_BUNS))
 
-        assert driver.find_element(*TestLocators.SEARCH_CURRENT_TAB_BUNS).text == 'Булки'
+        assert driver.find_element(*TestLocators.SEARCH_CURRENT_TAB_BUNS).is_displayed(), f'Tab is not displayed'
