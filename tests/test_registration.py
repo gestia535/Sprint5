@@ -2,13 +2,14 @@ from selenium.webdriver.support import expected_conditions
 from selenium.webdriver.support.wait import WebDriverWait
 from helpers import login_generator, password_generator
 from locators import TestLocators
+from test_data import BASE_URL, LOGIN_URL
 
 
 class TestRegistration:
     def test_registration_success(self, driver):
         email, first_name = login_generator('yandex.ru')
         password = password_generator()
-        driver.get('https://stellarburgers.nomoreparties.site/')
+        driver.get(BASE_URL)
         driver.find_element(*TestLocators.SEARCH_LOGIN_BUTTON_MAIN_PAGE).click()
         driver.find_element(*TestLocators.SEARCH_REGISTRATION_BUTTON_LOGIN_ACCOUNT_PAGE).click()
 
@@ -21,14 +22,13 @@ class TestRegistration:
         elm_password.send_keys(password)
         driver.find_element(*TestLocators.SEARCH_REGISTRATION_BUTTON_REGISTRATION_FORM).click()
 
-        WebDriverWait(driver, 5).until(expected_conditions.url_to_be("https://stellarburgers.nomoreparties.site/login"))
+        WebDriverWait(driver, 5).until(expected_conditions.url_to_be(LOGIN_URL))
 
-        assert driver.current_url == 'https://stellarburgers.nomoreparties.site/login', \
-            f'Current url is {driver.current_url}'
+        assert driver.current_url == LOGIN_URL, f'Current url is {driver.current_url}'
 
     def test_registration_short_password_failed(self, driver):
         email, first_name = login_generator('yandex.ru')
-        driver.get('https://stellarburgers.nomoreparties.site/')
+        driver.get(BASE_URL)
         driver.find_element(*TestLocators.SEARCH_LOGIN_BUTTON_MAIN_PAGE).click()
         driver.find_element(*TestLocators.SEARCH_REGISTRATION_BUTTON_LOGIN_ACCOUNT_PAGE).click()
 
